@@ -92,6 +92,8 @@ class FacetWP_Facet_Color
             $output .= '<div class="facetwp-color' . $selected . '" data-value="' . $result['facet_value'] . '" data-color="' . esc_attr( $result['facet_display_value'] ) . '"><span class="facetwp-color-circle"></span></div>';
         }
 
+        $output .= '<button class="fwp-color-reset" onclick="FWP.reset(\'color\')">Reset</button>';
+
         return $output;
     }
 
@@ -144,7 +146,6 @@ class FacetWP_Facet_Color
         obj['count'] = $this.find('.facet-count').val();
         return obj;
     });
-
 
 })(jQuery);
 </script>
@@ -204,6 +205,15 @@ class FacetWP_Facet_Color
 .facetwp-color.checked .facetwp-color-circle::after {
     opacity: 1;
 }
+
+.facetwp-type-color button.fwp-color-reset {
+    display: none;
+}
+
+.facetwp-type-color button.fwp-color-reset.active {
+    display: block;
+}
+
 </style>
 
 <script>
@@ -232,6 +242,13 @@ class FacetWP_Facet_Color
         $('.facetwp-color').each(function() {
             $(this).find('.facetwp-color-circle').css('background-color', $(this).attr('data-color'));
         });
+    });
+
+    $(document).on('facetwp-loaded', function() {
+        var active = $('.facetwp-color.checked');
+        if ( active.length ) {
+            $('.fwp-color-reset').addClass('active');
+        }
     });
 })(jQuery);
 </script>
